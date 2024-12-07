@@ -1,5 +1,3 @@
-require "pry"
-
 class ListDiff
   def initialize(path_to_input_file)
     @left = File.read(path_to_input_file).split("\n").map { |line| line.split("   ").first.to_i }.sort
