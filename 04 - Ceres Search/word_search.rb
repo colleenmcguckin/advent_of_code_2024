@@ -16,6 +16,17 @@ class WordSearch
     end.sum
   end
 
+  def count_crosses
+    right_diagonals = right_diagonals(CROSS_SEARCH.size)
+    left_diagonals = left_diagonals(CROSS_SEARCH.size)
+    diagonals = right_diagonals.zip(left_diagonals).map { |diagonal| diagonal.map { |d| d.select { |row| row.none?('.') } } }
+    diagonals.map do |right_diagonal, left_diagonal|
+      right_diagonal.zip(left_diagonal.reverse.map(&:reverse)).count do |cross|
+        (cross.first == CROSS_SEARCH.chars || cross.first == CROSS_SEARCH.chars.reverse) && (cross.last == CROSS_SEARCH.chars || cross.last == CROSS_SEARCH.chars.reverse)
+      end
+    end.sum
+  end
+
   private
 
   def rows
@@ -45,3 +56,4 @@ end
 
 word_search = WordSearch.new("input.txt")
 p word_search.count_words
+p word_search.count_crosses
